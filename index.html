@@ -1,29 +1,134 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>你好世界</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #f0f4ff;
-            font-family: "Microsoft Yahei", sans-serif;
-        }
-        h1 {
-            color: #2563eb;
-            font-size: 2.4rem;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>你好世界 · 轻雅版</title>
+  <style>
+    /* 全局重置 + 优雅基调 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 20% 30%, #d9e5ff, #b3c8f0);
+      font-family: "Inter", "Microsoft Yahei", system-ui, -apple-system, sans-serif;
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 极简装饰：柔光浮动层（增加呼吸感） */
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.5) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* 主卡片 — 毛玻璃质感 + 细腻阴影 */
+    .greeting-card {
+      position: relative;
+      z-index: 10;
+      max-width: 780px;
+      width: 100%;
+      padding: 3.5rem 2.5rem;
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(12px) saturate(180%);
+      -webkit-backdrop-filter: blur(12px) saturate(180%);
+      border-radius: 56px;
+      box-shadow: 
+        0 25px 50px -12px rgba(0, 20, 60, 0.25),
+        0 8px 20px -8px rgba(0, 40, 100, 0.15),
+        inset 0 1px 2px rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      transition: transform 0.3s ease, box-shadow 0.4s ease;
+      text-align: center;
+    }
+
+    /* 微妙的悬停抬升 (可选，增添互动感) */
+    .greeting-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 
+        0 32px 60px -12px rgba(0, 30, 80, 0.3),
+        0 12px 28px -8px rgba(0, 40, 100, 0.2),
+        inset 0 1px 3px rgba(255, 255, 255, 0.9);
+    }
+
+    /* 标题 — 渐变文字 + 极细文字阴影 */
+    h1 {
+      font-size: clamp(2.4rem, 8vw, 4rem);
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #1e3a8a, #2563eb, #3b82f6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 
+        0 2px 4px rgba(0, 40, 100, 0.08),
+        0 4px 12px rgba(37, 99, 235, 0.15);
+      /* 柔和边缘光 */
+      filter: drop-shadow(0 2px 2px rgba(255, 255, 255, 0.5));
+      transition: filter 0.3s ease;
+    }
+
+    /* 悬停时文字更亮一点 */
+    .greeting-card:hover h1 {
+      filter: drop-shadow(0 4px 8px rgba(255, 255, 255, 0.7));
+    }
+
+    /* 装饰性英文小字 (可选，增加层次) */
+    .sub-greeting {
+      margin-top: 1.25rem;
+      font-size: 1rem;
+      font-weight: 400;
+      color: #2c3e6b;
+      opacity: 0.75;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      display: inline-block;
+      padding-bottom: 0.25rem;
+      border-bottom: 2px solid rgba(37, 99, 235, 0.25);
+      font-family: "Inter", "Microsoft Yahei", sans-serif;
+    }
+
+    /* 响应式微调 */
+    @media (max-width: 480px) {
+      .greeting-card {
+        padding: 2.5rem 1.25rem;
+        border-radius: 40px;
+      }
+      .sub-greeting {
+        font-size: 0.85rem;
+        letter-spacing: 0.2em;
+      }
+    }
+
+    /* 可访问性/减少动态效果偏好 */
+    @media (prefers-reduced-motion: reduce) {
+      .greeting-card,
+      h1 {
+        transition: none;
+      }
+      .greeting-card:hover {
+        transform: none;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>你好世界！Hello World!</h1>
+  <div class="greeting-card">
+    <h1>你好世界！<br>Hello World!</h1>
+    <!-- 可选的装饰小字，如果不需要可以删掉下一行 -->
+    <span class="sub-greeting">· 初次见面 ·</span>
+  </div>
 </body>
 </html>
