@@ -3,132 +3,976 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>你好世界 · 轻雅版</title>
+  <title>奋进十五五 · 赓续红色血脉 | 红色故事</title>
   <style>
-    /* 全局重置 + 优雅基调 */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+    :root {
+      --red-primary: #b22222;
+      --red-deep: #8b1a1a;
+      --red-dark: #6b1212;
+      --gold: #d4af37;
+      --gold-light: #f0e6c5;
+      --cream: #fdfaf3;
+      --ink: #2c2b28;
+      --gray-soft: #f2efe8;
+      --shadow-sm: 0 8px 20px -8px rgba(0, 0, 0, 0.15);
+      --shadow-md: 0 20px 35px -10px rgba(0, 0, 0, 0.2);
+      --radius-card: 28px;
+    }
+
     body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at 20% 30%, #d9e5ff, #b3c8f0);
-      font-family: "Inter", "Microsoft Yahei", system-ui, -apple-system, sans-serif;
-      padding: 1.5rem;
+      font-family: "Noto Serif SC", "Songti SC", "SimSun", "Microsoft YaHei", serif;
+      background-color: var(--cream);
+      color: var(--ink);
+      line-height: 1.6;
+      scroll-behavior: smooth;
       position: relative;
+      overflow-x: hidden;
+    }
+
+    /* ===== 全局装饰性红色文化素材（背景纹理） ===== */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(178, 34, 34, 0.03) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.04) 0%, transparent 40%),
+        repeating-linear-gradient(45deg, transparent, transparent 60px, rgba(178, 34, 34, 0.015) 60px, rgba(178, 34, 34, 0.015) 61px);
+    }
+
+    /* 漂浮的五角星装饰层 */
+    .deco-stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
       overflow: hidden;
     }
 
-    /* 极简装饰：柔光浮动层（增加呼吸感） */
-    body::before {
+    .deco-stars span {
+      position: absolute;
+      color: rgba(178, 34, 34, 0.06);
+      font-size: 4rem;
+      animation: floatStar 12s infinite ease-in-out;
+    }
+
+    .deco-stars span:nth-child(1) { top: 5%; left: 3%; font-size: 5rem; animation-delay: 0s; }
+    .deco-stars span:nth-child(2) { top: 45%; right: 2%; font-size: 7rem; animation-delay: 2s; color: rgba(212, 175, 55, 0.05); }
+    .deco-stars span:nth-child(3) { bottom: 10%; left: 8%; font-size: 3.5rem; animation-delay: 4s; }
+    .deco-stars span:nth-child(4) { top: 70%; left: 45%; font-size: 2.5rem; animation-delay: 1s; color: rgba(212, 175, 55, 0.08); }
+    .deco-stars span:nth-child(5) { top: 15%; right: 20%; font-size: 3rem; animation-delay: 3s; }
+
+    @keyframes floatStar {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(15deg); }
+    }
+
+    /* 通用容器 */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ===== 顶部导航（带红色飘带装饰线） ===== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(253, 250, 243, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 2px solid rgba(212, 175, 55, 0.35);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .navbar::after {
       content: "";
       position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.5) 0%, transparent 60%);
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--red-primary), var(--gold), var(--red-primary), transparent);
+      opacity: 0.6;
+    }
+
+    .navbar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--red-deep);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo span {
+      color: var(--gold);
+      font-size: 1.8rem;
+      line-height: 1;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.8rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--ink);
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding-bottom: 6px;
+      border-bottom: 3px solid transparent;
+      transition: border-color 0.25s, color 0.25s;
+    }
+
+    .nav-links a:hover {
+      color: var(--red-primary);
+      border-bottom-color: var(--gold);
+    }
+
+    @media (max-width: 780px) {
+      .navbar .container {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 0.8rem 2rem;
+        gap: 0.6rem;
+      }
+      .nav-links {
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .nav-links a { font-size: 0.85rem; }
+    }
+
+    /* ===== 主视觉横幅 ===== */
+    .hero {
+      position: relative;
+      background: linear-gradient(135deg, #7a1515 0%, #b22222 50%, #6b1212 100%);
+      color: #fff9e6;
+      padding: 5rem 0 6rem;
+      overflow: hidden;
+      text-align: center;
+      border-bottom: 6px solid var(--gold);
+    }
+
+    /* 红旗飘带装饰 */
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: -10%;
+      left: -5%;
+      width: 40%;
+      height: 120%;
+      background: rgba(255, 215, 0, 0.06);
+      transform: skewX(-15deg);
       pointer-events: none;
     }
 
-    /* 主卡片 — 毛玻璃质感 + 细腻阴影 */
-    .greeting-card {
+    .hero::after {
+      content: "★ ★ ★ ★ ★";
+      position: absolute;
+      bottom: 8%;
+      right: 5%;
+      font-size: 2rem;
+      color: rgba(255, 215, 0, 0.12);
+      letter-spacing: 1.5rem;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .hero-content {
       position: relative;
-      z-index: 10;
-      max-width: 780px;
+      z-index: 2;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .hero-year {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(4px);
+      padding: 0.5rem 2rem;
+      border-radius: 60px;
+      font-size: 1.1rem;
+      letter-spacing: 0.3rem;
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      margin-bottom: 1.8rem;
+      font-weight: 500;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.6rem, 7vw, 4.8rem);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: 4px;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 .highlight {
+      color: var(--gold);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto;
+      opacity: 0.92;
+      border-top: 1px solid rgba(255, 215, 0, 0.4);
+      padding-top: 1.6rem;
+      margin-top: 1.6rem;
+    }
+
+    /* ===== 红色故事板块（核心新增） ===== */
+    .stories-section {
+      padding: 5rem 0 3rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      text-align: center;
+      color: var(--red-deep);
+      margin-bottom: 0.75rem;
+      letter-spacing: 2px;
+      position: relative;
+      display: inline-block;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
+
+    .section-title::after {
+      content: "";
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: var(--gold);
+      margin: 0.8rem auto 0;
+      border-radius: 4px;
+    }
+
+    .section-title::before {
+      content: "★";
+      position: absolute;
+      left: -30px;
+      top: 0;
+      color: var(--gold);
+      font-size: 1.2rem;
+      opacity: 0.7;
+    }
+
+    .section-title::after {
+      content: "";
+    }
+
+    .section-sub {
+      text-align: center;
+      color: #5f5a4e;
+      font-size: 1rem;
+      margin-bottom: 3rem;
+      letter-spacing: 1px;
+    }
+
+    .stories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .story-card {
+      background: #fff;
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.3s, box-shadow 0.3s;
+      border-bottom: 5px solid var(--red-primary);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .story-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* 卡片右上角装饰五角星 */
+    .story-card::after {
+      content: "★";
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      color: rgba(212, 175, 55, 0.3);
+      font-size: 1.6rem;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    /* 图片区域 */
+    .story-img {
       width: 100%;
-      padding: 3.5rem 2.5rem;
-      background: rgba(255, 255, 255, 0.55);
-      backdrop-filter: blur(12px) saturate(180%);
-      -webkit-backdrop-filter: blur(12px) saturate(180%);
-      border-radius: 56px;
-      box-shadow: 
-        0 25px 50px -12px rgba(0, 20, 60, 0.25),
-        0 8px 20px -8px rgba(0, 40, 100, 0.15),
-        inset 0 1px 2px rgba(255, 255, 255, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      transition: transform 0.3s ease, box-shadow 0.4s ease;
+      height: 220px;
+      background: linear-gradient(135deg, #e8e0d0, #d4c8b0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 3px solid var(--gold);
+    }
+
+    .story-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s;
+    }
+
+    .story-card:hover .story-img img {
+      transform: scale(1.04);
+    }
+
+    /* 图片占位文字（当图片未加载时显示） */
+    .story-img .img-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #8b7a5a;
+      font-size: 0.9rem;
+      gap: 0.5rem;
+      background: linear-gradient(145deg, #ede6d8, #d9cdb8);
+      z-index: 1;
+    }
+
+    .story-img .img-placeholder span {
+      font-size: 2.5rem;
+      opacity: 0.5;
+    }
+
+    /* 图片说明标签 */
+    .story-img .img-tag {
+      position: absolute;
+      bottom: 10px;
+      left: 12px;
+      background: rgba(139, 26, 26, 0.85);
+      color: #f0e6c5;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.8rem;
+      border-radius: 20px;
+      z-index: 3;
+      letter-spacing: 0.5px;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+    }
+
+    .story-body {
+      padding: 1.5rem 1.4rem 1.8rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .story-body h3 {
+      font-size: 1.35rem;
+      color: var(--red-deep);
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .story-body h3 .star-bullet {
+      color: var(--gold);
+      font-size: 0.9rem;
+    }
+
+    .story-body p {
+      color: #444;
+      font-size: 0.95rem;
+      line-height: 1.75;
+      flex: 1;
+    }
+
+    .story-source {
+      margin-top: 1rem;
+      font-size: 0.78rem;
+      color: #8a7e6a;
+      border-top: 1px dashed #ddd6c8;
+      padding-top: 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .story-source::before {
+      content: "📖";
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+
+    /* ===== 装饰性红色文化横幅（素材条） ===== */
+    .red-culture-banner {
+      background: linear-gradient(90deg, var(--red-dark), var(--red-primary), var(--red-dark));
+      padding: 1.8rem 0;
+      margin: 3rem 0 0;
+      text-align: center;
+      color: var(--gold-light);
+      font-size: 1.1rem;
+      letter-spacing: 4px;
+      position: relative;
+      overflow: hidden;
+      border-top: 3px solid var(--gold);
+      border-bottom: 3px solid var(--gold);
+    }
+
+    .red-culture-banner::before {
+      content: "★★★★★★★★★★";
+      position: absolute;
+      top: -10px;
+      left: 0;
+      width: 200%;
+      font-size: 8rem;
+      color: rgba(255, 215, 0, 0.04);
+      letter-spacing: 1rem;
+      white-space: nowrap;
+      pointer-events: none;
+      animation: scrollStars 30s linear infinite;
+    }
+
+    @keyframes scrollStars {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .red-culture-banner span {
+      position: relative;
+      z-index: 2;
+      display: inline-block;
+      padding: 0 2rem;
+    }
+
+    .red-culture-banner .star-deco {
+      color: var(--gold);
+      margin: 0 0.8rem;
+      font-size: 1.2rem;
+    }
+
+    /* ===== 原有板块（复用并微调） ===== */
+    .timeline {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .timeline-card {
+      flex: 1 1 260px;
+      background: #fff;
+      border-radius: var(--radius-card);
+      padding: 2.2rem 1.8rem 1.8rem;
+      box-shadow: var(--shadow-sm);
+      border-bottom: 6px solid var(--gold);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
       text-align: center;
     }
 
-    /* 微妙的悬停抬升 (可选，增添互动感) */
-    .greeting-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 
-        0 32px 60px -12px rgba(0, 30, 80, 0.3),
-        0 12px 28px -8px rgba(0, 40, 100, 0.2),
-        inset 0 1px 3px rgba(255, 255, 255, 0.9);
+    .timeline-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-md);
     }
 
-    /* 标题 — 渐变文字 + 极细文字阴影 */
-    h1 {
-      font-size: clamp(2.4rem, 8vw, 4rem);
-      font-weight: 700;
-      line-height: 1.3;
-      letter-spacing: -0.02em;
-      background: linear-gradient(135deg, #1e3a8a, #2563eb, #3b82f6);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      text-shadow: 
-        0 2px 4px rgba(0, 40, 100, 0.08),
-        0 4px 12px rgba(37, 99, 235, 0.15);
-      /* 柔和边缘光 */
-      filter: drop-shadow(0 2px 2px rgba(255, 255, 255, 0.5));
-      transition: filter 0.3s ease;
+    .timeline-icon {
+      font-size: 2.8rem;
+      margin-bottom: 0.8rem;
+      display: block;
     }
 
-    /* 悬停时文字更亮一点 */
-    .greeting-card:hover h1 {
-      filter: drop-shadow(0 4px 8px rgba(255, 255, 255, 0.7));
+    .timeline-card h3 {
+      font-size: 1.6rem;
+      color: var(--red-deep);
+      margin-bottom: 0.5rem;
     }
 
-    /* 装饰性英文小字 (可选，增加层次) */
-    .sub-greeting {
-      margin-top: 1.25rem;
-      font-size: 1rem;
-      font-weight: 400;
-      color: #2c3e6b;
-      opacity: 0.75;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
+    .timeline-card .year-badge {
+      background: var(--gray-soft);
       display: inline-block;
-      padding-bottom: 0.25rem;
-      border-bottom: 2px solid rgba(37, 99, 235, 0.25);
-      font-family: "Inter", "Microsoft Yahei", sans-serif;
+      padding: 0.2rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      color: #6b4f1d;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      border: 1px solid #ddd6c8;
     }
 
-    /* 响应式微调 */
-    @media (max-width: 480px) {
-      .greeting-card {
-        padding: 2.5rem 1.25rem;
-        border-radius: 40px;
-      }
-      .sub-greeting {
-        font-size: 0.85rem;
-        letter-spacing: 0.2em;
-      }
+    .timeline-card p {
+      color: #444;
+      font-size: 0.98rem;
+      line-height: 1.7;
     }
 
-    /* 可访问性/减少动态效果偏好 */
-    @media (prefers-reduced-motion: reduce) {
-      .greeting-card,
-      h1 {
-        transition: none;
+    .themes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0 2rem;
+    }
+
+    .theme-card {
+      background: #fff;
+      border-radius: var(--radius-card);
+      padding: 2rem 1.6rem;
+      box-shadow: var(--shadow-sm);
+      border-left: 6px solid var(--gold);
+      transition: background 0.25s, transform 0.25s;
+      text-align: left;
+    }
+
+    .theme-card:hover {
+      background: #fffcf5;
+      transform: scale(1.02);
+    }
+
+    .theme-card .icon {
+      font-size: 2.2rem;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .theme-card h3 {
+      font-size: 1.4rem;
+      color: var(--red-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .theme-card p {
+      color: #3b3a36;
+      font-size: 0.98rem;
+      line-height: 1.7;
+    }
+
+    .spirit-quote {
+      background: linear-gradient(145deg, #f7f2e9, #ece4d7);
+      border-radius: 40px;
+      padding: 3rem 2.5rem;
+      margin: 4rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 2.5rem;
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      box-shadow: inset 0 1px 6px rgba(255, 255, 255, 0.8), var(--shadow-sm);
+      position: relative;
+    }
+
+    .spirit-quote::before {
+      content: "★";
+      position: absolute;
+      top: -12px;
+      left: 30px;
+      color: var(--gold);
+      font-size: 1.8rem;
+      background: var(--cream);
+      padding: 0 8px;
+    }
+
+    .quote-icon {
+      font-size: 4rem;
+      color: var(--gold);
+      line-height: 1;
+      opacity: 0.8;
+      font-family: serif;
+    }
+
+    .quote-text {
+      flex: 1;
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--red-deep);
+      line-height: 1.6;
+    }
+
+    .quote-text small {
+      display: block;
+      font-size: 1rem;
+      color: #7a6e5a;
+      margin-top: 1rem;
+      font-weight: 400;
+    }
+
+    .split-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+      margin: 4rem 0;
+    }
+
+    .split-card {
+      flex: 1 1 300px;
+      background: #fff;
+      border-radius: var(--radius-card);
+      padding: 2.5rem 2rem;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.3s;
+      border-top: 8px solid var(--red-primary);
+    }
+
+    .split-card:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .split-card h2 {
+      font-size: 1.9rem;
+      color: var(--red-deep);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .split-card ul {
+      list-style: none;
+      margin-top: 1rem;
+    }
+
+    .split-card li {
+      padding: 0.6rem 0;
+      border-bottom: 1px dashed #ddd6c8;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 1.02rem;
+    }
+
+    .split-card li::before {
+      content: "◆";
+      color: var(--gold);
+      font-size: 0.8rem;
+    }
+
+    .footer {
+      background: #2a2420;
+      color: #d9d2c5;
+      text-align: center;
+      padding: 2.8rem 1rem;
+      margin-top: 4rem;
+      border-top: 6px solid var(--gold);
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .footer p {
+      opacity: 0.8;
+    }
+
+    .footer .footer-star {
+      color: var(--gold);
+      margin: 0 0.5rem;
+    }
+
+    .divider-star {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      color: var(--gold);
+      font-size: 1.2rem;
+      letter-spacing: 6px;
+      margin: 2.5rem 0;
+      opacity: 0.7;
+      position: relative;
+      z-index: 2;
+    }
+
+    @media (max-width: 600px) {
+      .stories-grid {
+        grid-template-columns: 1fr;
       }
-      .greeting-card:hover {
+      .story-img {
+        height: 200px;
+      }
+      .section-title {
+        font-size: 1.6rem;
+        white-space: normal;
+        left: 0;
         transform: none;
+        display: block;
+        text-align: center;
+      }
+      .section-title::before {
+        display: none;
       }
     }
   </style>
 </head>
 <body>
-  <div class="greeting-card">
-    <h1>你好世界！<br>Hello World!</h1>
-    <!-- 可选的装饰小字，如果不需要可以删掉下一行 -->
-    <span class="sub-greeting">· 初次见面 ·</span>
+
+  <!-- 全局漂浮五角星装饰 -->
+  <div class="deco-stars">
+    <span>★</span>
+    <span>★</span>
+    <span>★</span>
+    <span>★</span>
+    <span>★</span>
   </div>
+
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="logo">
+        <span>★</span> 奋进十五五 · 红色传承
+      </div>
+      <ul class="nav-links">
+        <li><a href="#hero">首页</a></li>
+        <li><a href="#stories">红色故事</a></li>
+        <li><a href="#milestones">关键节点</a></li>
+        <li><a href="#themes">主题内涵</a></li>
+        <li><a href="#spirit">精神传承</a></li>
+        <li><a href="#life-rule">美好与法治</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 主视觉横幅 -->
+  <header id="hero" class="hero">
+    <div class="hero-content">
+      <div class="hero-year">2026 · 十五五开局之年</div>
+      <h1>赓续红色血脉<br><span class="highlight">奋进复兴征程</span></h1>
+      <p>庆祝中国共产党成立105周年 · 中国工农红军长征胜利90周年</p>
+    </div>
+  </header>
+
+  <!-- ===== 红色故事板块（新增核心） ===== -->
+  <section id="stories" class="stories-section">
+    <div class="container">
+      <h2 class="section-title">红色历史故事</h2>
+      <div class="section-sub">每一段故事，都是一座精神丰碑</div>
+
+      <div class="stories-grid">
+
+        <!-- 故事1：陈树湘 -->
+        <div class="story-card">
+          <div class="story-img">
+            <img src="https://p3-sign.toutiaoimg.com/tos-cn-i-axegupay5k/7c8e6d5a4b3c2d1e0f9a8b7c6d5e4f3a~tplv-tt-origin-web:gif.jpeg?_iz=58558&from=article.pc_detail&lk3s=953192f4&x-expires=1735689600&x-signature=placeholder" alt="陈树湘烈士" onerror="this.style.display='none';this.parentNode.querySelector('.img-placeholder').style.display='flex';">
+            <div class="img-placeholder" style="display:none;">
+              <span>🚩</span>
+              陈树湘 · 断肠明志
+            </div>
+            <span class="img-tag">央视网《伟大远征》</span>
+          </div>
+          <div class="story-body">
+            <h3><span class="star-bullet">★</span> 陈树湘 · 断肠明志</h3>
+            <p>湘江之战中，红三十四师师长陈树湘率部掩护党中央和红军主力渡江，全师陷于敌人重围。陈树湘腹部重伤被俘，在敌人抬他去邀功的路上，他用手从伤口伸入腹部，绞断自己的肠子，壮烈牺牲，年仅29岁，实现了“为苏维埃新中国流尽最后一滴血”的誓言[citation:1][citation:7]。</p>
+            <div class="story-source">据央视网《伟大远征》报道</div>
+          </div>
+        </div>
+
+        <!-- 故事2：吴焕先 -->
+        <div class="story-card">
+          <div class="story-img">
+            <img src="https://p3-sign.toutiaoimg.com/tos-cn-i-axegupay5k/8d7e6f5a4b3c2d1e0f9a8b7c6d5e4f3b~tplv-tt-origin-web:gif.jpeg?_iz=58558&from=article.pc_detail&lk3s=953192f4&x-expires=1735689600&x-signature=placeholder" alt="吴焕先烈士" onerror="this.style.display='none';this.parentNode.querySelector('.img-placeholder').style.display='flex';">
+            <div class="img-placeholder" style="display:none;">
+              <span>🔥</span>
+              吴焕先 · 倾其所有
+            </div>
+            <span class="img-tag">央视网《伟大远征》</span>
+          </div>
+          <div class="story-body">
+            <h3><span class="star-bullet">★</span> 吴焕先 · 倾其所有为革命</h3>
+            <p>鄂豫皖革命根据地创始人之一吴焕先，为了革命当众烧毁自家的租地契约和债务借据，6位亲人被民团杀害，他悲痛欲绝却从未退缩。1935年8月，红二十五军在汭河遭遇突袭，28岁的吴焕先在激战中倒下，把短暂的一生献给了革命事业[citation:1]。</p>
+            <div class="story-source">据央视网《伟大远征》报道</div>
+          </div>
+        </div>
+
+        <!-- 故事3：贺炳炎 -->
+        <div class="story-card">
+          <div class="story-img">
+            <img src="https://p3-sign.toutiaoimg.com/tos-cn-i-axegupay5k/9e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4c~tplv-tt-origin-web:gif.jpeg?_iz=58558&from=article.pc_detail&lk3s=953192f4&x-expires=1735689600&x-signature=placeholder" alt="贺炳炎将军" onerror="this.style.display='none';this.parentNode.querySelector('.img-placeholder').style.display='flex';">
+            <div class="img-placeholder" style="display:none;">
+              <span>💪</span>
+              贺炳炎 · 硬骨头
+            </div>
+            <span class="img-tag">央视网《伟大远征》</span>
+          </div>
+          <div class="story-body">
+            <h3><span class="star-bullet">★</span> 贺炳炎 · 无麻药截肢</h3>
+            <p>1935年12月，红五师师长贺炳炎右臂被敌击中，必须截肢。没有麻醉药，没有手术锯，医生用门板搭起手术台，用一把板锯为他做了两个多小时的手术。手术结束时，他用来咬住的毛巾已被生生咬烂。贺龙感慨：“这是贺炳炎的骨头，共产党人的骨头！”[citation:1]</p>
+            <div class="story-source">据央视网《伟大远征》报道</div>
+          </div>
+        </div>
+
+        <!-- 故事4：于都人民 -->
+        <div class="story-card">
+          <div class="story-img">
+            <img src="https://p3-sign.toutiaoimg.com/tos-cn-i-axegupay5k/0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d~tplv-tt-origin-web:gif.jpeg?_iz=58558&from=article.pc_detail&lk3s=953192f4&x-expires=1735689600&x-signature=placeholder" alt="于都河长征出发地" onerror="this.style.display='none';this.parentNode.querySelector('.img-placeholder').style.display='flex';">
+            <div class="img-placeholder" style="display:none;">
+              <span>🌉</span>
+              于都河 · 军民同心
+            </div>
+            <span class="img-tag">新华社 · 于都长征出发纪念碑</span>
+          </div>
+          <div class="story-body">
+            <h3><span class="star-bullet">★</span> 于都人民 · 倾尽家当架浮桥</h3>
+            <p>1934年10月，中央红军主力从于都集结出发，需要架设浮桥渡过于都河。于都人民“家家卸门板、户户捐木料”，一位老人甚至捐出了自己的寿材。周恩来后来感慨：“于都人民真好，苏区人民真亲。”如今，红军大桥、长征大桥、集结大桥、渡江大桥、胜利大桥五桥并跨，连缀起“红军长征集结渡江胜利”的壮阔历程[citation:2]。</p>
+            <div class="story-source">据新浪财经/央视报道</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 装饰性红色文化横幅 -->
+  <div class="red-culture-banner">
+    <span><span class="star-deco">★</span> 传承红色基因 · 赓续红色血脉 <span class="star-deco">★</span></span>
+  </div>
+
+  <!-- 关键节点时间轴 -->
+  <section id="milestones" class="container" style="padding: 4rem 2rem;">
+    <h2 class="section-title">重要历史节点</h2>
+    <div class="section-sub">回望光辉历程 · 汲取前行力量</div>
+
+    <div class="timeline">
+      <div class="timeline-card">
+        <span class="timeline-icon">🚩</span>
+        <h3>建党105周年</h3>
+        <div class="year-badge">1921 - 2026</div>
+        <p>从南湖红船到巍巍巨轮，中国共产党带领中国人民走过波澜壮阔的105年。初心不改，使命在肩。</p>
+      </div>
+      <div class="timeline-card">
+        <span class="timeline-icon">⛰️</span>
+        <h3>长征胜利90周年</h3>
+        <div class="year-badge">1936 - 2026</div>
+        <p>红军不怕远征难，万水千山只等闲。长征精神是中华民族不屈不挠、勇往直前的精神丰碑。</p>
+      </div>
+      <div class="timeline-card">
+        <span class="timeline-icon">🌾</span>
+        <h3>“十五五”开局</h3>
+        <div class="year-badge">2026 启航</div>
+        <p>全面建设社会主义现代化国家新征程的关键之年，开好局、起好步，谱写高质量发展新篇章。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 主题内涵 -->
+  <section id="themes" class="container" style="padding: 2rem 2rem;">
+    <h2 class="section-title">弘扬时代主题</h2>
+    <div class="section-sub">爱国主义 · 核心价值观 · 中国精神 · 社会主义道德与法治 · 美好生活</div>
+
+    <div class="themes-grid">
+      <div class="theme-card">
+        <span class="icon">🇨🇳</span>
+        <h3>爱国主义</h3>
+        <p>爱国主义是中华民族的民族心、民族魂。坚持爱国和爱党、爱社会主义相统一，让爱国主义的旗帜高高飘扬。</p>
+      </div>
+      <div class="theme-card">
+        <span class="icon">⚖️</span>
+        <h3>核心价值观</h3>
+        <p>富强、民主、文明、和谐，自由、平等、公正、法治，爱国、敬业、诚信、友善——凝聚社会共识，引领时代风尚。</p>
+      </div>
+      <div class="theme-card">
+        <span class="icon">🔥</span>
+        <h3>中国精神</h3>
+        <p>以爱国主义为核心的民族精神，以改革创新为核心的时代精神。长征精神、建党精神……构筑起中国精神谱系。</p>
+      </div>
+      <div class="theme-card">
+        <span class="icon">🕊️</span>
+        <h3>道德与法治</h3>
+        <p>坚持依法治国和以德治国相结合，弘扬社会主义道德，提升公民法治素养，构建和谐有序的社会环境。</p>
+      </div>
+      <div class="theme-card">
+        <span class="icon">🌻</span>
+        <h3>美好生活</h3>
+        <p>人民对美好生活的向往就是我们的奋斗目标。在党的领导下，共同创造更加富裕、幸福、美好的生活。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 精神传承引用 -->
+  <section id="spirit" class="container">
+    <div class="spirit-quote">
+      <div class="quote-icon">“</div>
+      <div class="quote-text">
+        伟大长征精神，是中国共产党人及其领导的人民军队革命风范的生动反映，是中华民族自强不息的民族品格的集中展示，是以爱国主义为核心的民族精神的最高体现。
+        <small>—— 弘扬伟大长征精神，走好新时代的长征路</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- 美好生活与法治 -->
+  <section id="life-rule" class="container split-section">
+    <div class="split-card">
+      <h2>🌱 美好生活 · 共同缔造</h2>
+      <ul>
+        <li>坚持人民至上，增进民生福祉</li>
+        <li>推动共同富裕，共享发展成果</li>
+        <li>建设美丽中国，守护绿水青山</li>
+        <li>丰富精神文化，提升生活品质</li>
+        <li>促进社会公平，温暖每个角落</li>
+      </ul>
+    </div>
+    <div class="split-card">
+      <h2>⚖️ 社会主义道德与法治</h2>
+      <ul>
+        <li>践行社会主义核心价值观</li>
+        <li>弘扬中华传统美德，培育时代新风</li>
+        <li>尊法学法守法用法，建设法治社会</li>
+        <li>坚持依法治国与以德治国相结合</li>
+        <li>维护社会公平正义，保障人民权益</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 装饰分割 -->
+  <div class="container divider-star">
+    ★ ★ ★
+  </div>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="container">
+      <p>2026 · 十五五开局之年  &nbsp;|&nbsp;  庆祝中国共产党成立105周年  &nbsp;|&nbsp;  纪念中国工农红军长征胜利90周年</p>
+      <p style="margin-top: 1rem; font-size: 0.85rem; opacity: 0.7;">
+        <span class="footer-star">★</span> 弘扬爱国主义精神，践行社会主义核心价值观，传承中国精神，共建美好生活 <span class="footer-star">★</span>
+      </p>
+    </div>
+  </footer>
+
 </body>
 </html>
